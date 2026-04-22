@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Prescrição - MaterCare{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="fw-bold" style="color: #0A2342;">
+            <i class="bi bi-capsule me-2"></i>Prescrição Médica
+        </h1>
+        <p class="text-muted">Módulo 1: Alerta de Alergias e Medicamentos</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-prescription2 me-2"></i>Nova Prescrição</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('prescricao') }}">
+                    <div class="mb-3">
+                        <label for="paciente_id" class="form-label">Paciente *</label>
+                        <select class="form-select" id="paciente_id" name="paciente_id" required>
+                            <option value="">Selecione o paciente...</option>
+                            {% for p in pacientes %}
+                            <option value="{{ p.id }}">
+                                {{ p.nome }}
+                                {% if p.alergias %} ⚠️ (alérgico){% endif %}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="medicamento_id" class="form-label">Medicamento *</label>
+                        <select class="form-select" id="medicamento_id" name="medicamento_id" required>
+                            <option value="">Selecione o medicamento...</option>
+                            {% for m in medicamentos %}
+                            <option value="{{ m.id }}">{{ m.nome }} ({{ m.substancia_ativa }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: #0A2342; border-color: #0A2342;">
+                        <i class="bi bi-shield-check me-1"></i>Verificar e Prescrever
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mt-4 bg-light">
+            <div class="card-body">
+                <h6 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Como funciona</h6>
+                <p class="text-muted small mb-0">
+                    O sistema cruza automaticamente as alergias registradas do paciente com o 
+                    medicamento selecionado. Se houver conflito, um <strong class="text-danger">ALERTA</strong>
+                    é exibido antes da confirmação da prescrição.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        {% if resultado %}
+        <div class="card border-0 shadow {% if resultado.status == 'ALERTA' %}border-danger{% else %}border-success{% endif %}"
+             style="border-width: 3px !important;">
+            <div class="card-header {% if resultado.status == 'ALERTA' %}bg-danger{% else %}bg-success{% endif %} text-white">
+                <h4 class="mb-0">
+                    {% if resultado.status == 'ALERTA' %}
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>ALERTA DE SEGURANÇA
+                    {% else %}
+                        <i class="bi bi-check-circle-fill me-2"></i>MEDICAMENTO LIBERADO
+                    {% endif %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <p class="text-muted mb-1">Paciente:</p>
+                        <p class="fw-bold fs-5">{{ resultado.paciente.nome }}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="text-muted mb-1">Medicamento:</p>
+                        <p class="fw-bold fs-5">{{ resultado.medicamento.nome }}</p>
+                    </div>
+                </div>
+
+                {% if resultado.paciente.alergias %}
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <strong>Alergias registradas:</strong> {{ resultado.paciente.alergias }}
+                </div>
+                {% endif %}
+
+                <div class="alert {% if resultado.status == 'ALERTA' %}alert-danger{% else %}alert-success{% endif %} fs-5">
+                    {{ resultado.mensagem }}
+                </div>
+
+                {% if resultado.status == 'ALERTA' %}
+                <div class="text-center mt-4">
+                    <p class="text-danger fw-bold">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Prescrição registrada com alerta. Reavalie a medicação.
+                    </p>
+                </div>
+                {% else %}
+                <div class="text-center mt-4">
+                    <p class="text-success fw-bold">
+                        <i class="bi bi-check2-circle me-1"></i>
+                        Prescrição registrada com sucesso.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+                <i class="bi bi-shield-check display-1 text-muted mb-3"></i>
+                <h4 class="text-muted">Sistema de Alerta Ativo</h4>
+                <p class="text-muted">
+                    Selecione um paciente e um medicamento para verificar
+
+                    se há risco de reação alérgica.
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

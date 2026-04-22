@@ -1,0 +1,21 @@
+Fluxo para criar o painél da Mater Care
+
+ATENÇÃO: Caso nunca tenha habilitado um ambiente virtual, rode esse código:
+
+"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+
+
+Passos:
+
+1 - python3 -m venv venv - (Criar ambiente virtual)
+
+2 - venv\Scripts\activate      #Windows - (Ativar o ambiente virtual)
+    source venv/bin/activate   #Linux
+
+3 - pip install -r requirements.txt - (Baixar as bibliotecas)
+
+4 - python seed.py - (Executar o .py)
+
+5 - python app.py - (Executar o .py)
+
+6 - http://localhost:5000 - (Acessar o painél)

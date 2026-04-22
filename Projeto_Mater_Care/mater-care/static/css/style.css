@@ -1,0 +1,84 @@
+/* MaterCare MVP - Estilos customizados */
+
+/* Paleta de cores */
+:root {
+    --navy: #0A2342;
+    --emerald: #1B7A4A;
+    --light-gray: #f4f7fb;
+}
+
+/* Body */
+body {
+    background-color: var(--light-gray);
+    min-height: 100vh;
+}
+
+/* Navbar ativa */
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* Tabelas */
+.table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--navy);
+    border-color: var(--navy);
+}
+
+.btn-primary:hover {
+    background-color: #081a33;
+    border-color: #081a33;
+}
+
+.btn-success {
+    background-color: var(--emerald);
+    border-color: var(--emerald);
+}
+.btn-success:hover {
+    background-color: #15613a;
+    border-color: #15613a;
+}
+
+/* Badges de alerta */
+.badge.bg-warning {
+    color: #000 !important;
+}
+
+/* Form focus */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 0.2rem rgba(27, 122, 74, 0.25);
+}
+
+/* Animação de alerta */
+@keyframes pulse-danger {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+.border-danger {
+    animation: pulse-danger 2s infinite;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
