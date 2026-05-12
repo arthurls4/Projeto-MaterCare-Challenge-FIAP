@@ -194,5 +194,5 @@ def editar_paciente(id):
 
 # ------------------- INICIALIZAÇÃO ------------------
 
-if name == 'main':
+if __name__ == '__main__':
     app.run()
