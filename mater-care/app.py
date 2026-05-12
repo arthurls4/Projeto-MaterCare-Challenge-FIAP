@@ -193,5 +193,6 @@ def editar_paciente(id):
 # ------------------- INICIALIZAÇÃO ------------------
 
 if __name__ == '__main__':
-    # O host '0.0.0.0' abre o servidor para a sua rede local
-    app.run(debug=True, host='0.0.0.0')
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=5000)

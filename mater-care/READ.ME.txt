@@ -4,8 +4,7 @@ ATENÇÃO: Caso nunca tenha habilitado um ambiente virtual, rode esse código:
 
 "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
-
-Passos:
+Passo a Passo:
 
 1 - python3 -m venv venv - (Criar ambiente virtual)
 
